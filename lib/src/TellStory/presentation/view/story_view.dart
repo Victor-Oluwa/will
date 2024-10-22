@@ -33,10 +33,8 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
         if (_isFinishedWriting == true &&
             _scrollController.position.pixels ==
                 _scrollController.position.maxScrollExtent) {
-          log('Scrolled to the end: Timer canceled');
           _cancelTimer();
         }
-        log('Not scrolled to the end: Timer not canceled');
       },
     );
   }
@@ -53,7 +51,6 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
   void _cancelTimer() {
     if (_timer != null && _timer!.isActive) {
       _timer?.cancel();
-      log('Timer cancelled.');
     }
   }
 
@@ -89,7 +86,6 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
     final currentNode = storyState.currentNode;
     final storyNode = storyData[currentNode] ?? {};
     final List? choices = storyNode['choices'] as List?;
-
     return Scaffold(
       backgroundColor: Colors.blueGrey.shade900,
       appBar: AppBar(
@@ -130,7 +126,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                         ? 'oops! We have not written this part of the story. The story is still under construction. Bear with us 🙏🏽.'
                         : storyNode['text'].toString(),
                     textAlign: TextAlign.justify,
-                    speed: const Duration(milliseconds: 25),
+                    speed: const Duration(milliseconds: 10),
                     textStyle: TextStyle(
                       fontFamily: 'BalooBhai',
                       color: Colors.white70,
@@ -176,14 +172,16 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                               text: 'Restart',
                               onTap: () {
                                 ref.read(storyProvider.notifier).resetStory();
-                                // key = UniqueKey();
-                                // _isFinishedWriting = false;
-
-                                _cancelTimer();
-                                refreshTypeWriter();
-                                // Get.offAll(const StoryIntroScreen(),arguments: story);
-                                // setStoryNode(nodeKey: 'startingNode');
-                                // refreshTypeWriter();
+                                setState(() {
+                                  _isFinishedWriting = false;
+                                });
+                                Future.delayed(
+                                 const Duration(seconds: 1),
+                                  () {
+                                    _cancelTimer();
+                                    refreshTypeWriter();
+                                  },
+                                );
                               },
                             );
                     },

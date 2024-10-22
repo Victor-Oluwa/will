@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:will/src/TellStory/entity/story_progress.dart';
@@ -42,5 +44,6 @@ class StoryNotifier extends StateNotifier<StoryState> {
     final box = Hive.box<StoryProgress>('storyBox');
     await box.delete('progress');
     state = StoryState(currentNode: 'start', userChoices: []);
+    log('Reset state: $state');
   }
 }
