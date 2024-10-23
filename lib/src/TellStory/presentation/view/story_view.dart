@@ -4,9 +4,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:get/get.dart';
 import 'package:will/core/providers/story_provider.dart';
 import 'package:will/core/widgets/will_text.dart';
 import 'package:will/src/TellStory/data/story_data.dart';
+import 'package:will/src/TellStory/presentation/view/home.dart';
 import 'package:will/src/TellStory/presentation/widgets/will_button.dart';
 
 class StoryScreen extends ConsumerStatefulWidget {
@@ -89,9 +91,16 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
     return Scaffold(
       backgroundColor: Colors.blueGrey.shade900,
       appBar: AppBar(
-        leading: Icon(
-          Icons.cancel,
-          size: width * 0.05,
+        leading: GestureDetector(
+          onTap: () {
+            ref.read(storyProvider.notifier).resetStory();
+            Get.offAll(() =>const HomeScreen());
+          },
+          child: Icon(
+            Icons.cancel,
+            color: Colors.white70,
+            size: width * 0.05,
+          ),
         ),
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
@@ -126,7 +135,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                         ? 'oops! We have not written this part of the story. The story is still under construction. Bear with us 🙏🏽.'
                         : storyNode['text'].toString(),
                     textAlign: TextAlign.justify,
-                    speed: const Duration(milliseconds: 10),
+                    speed: const Duration(milliseconds: 25),
                     textStyle: TextStyle(
                       fontFamily: 'BalooBhai',
                       color: Colors.white70,
@@ -176,7 +185,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                                   _isFinishedWriting = false;
                                 });
                                 Future.delayed(
-                                 const Duration(seconds: 1),
+                                  const Duration(seconds: 1),
                                   () {
                                     _cancelTimer();
                                     refreshTypeWriter();
