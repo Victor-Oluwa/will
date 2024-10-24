@@ -4,9 +4,9 @@ Welcome to **Will**, the app that puts you at the center of your own adventure! 
 
 ## 🎬 **App in Action**
 
-Check out **Will** in action! Experience the **dynamic, animated typewriter-style storytelling**, where each word unfolds on the screen, and your choices determine the next chapter.
+Experience the **dynamic, animated typewriter-style storytelling**, where each word unfolds on the screen, and your choices determine the next chapter.
 
-<img src="shots/moving_will.gif" alt="Will in Action" width="200"/>
+<img src="shots/moving_will.gif" alt="Will in Action" width="300"/>
 
 
 ---
